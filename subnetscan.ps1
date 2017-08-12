@@ -32,7 +32,7 @@ $subInfo = $activeIP.ipsubnet[0]
 if ($subInfo -eq "255.255.255.0"){
     $classCPattern = "\b(?:[0-9]{1,3}\.){2}[0-9]{1,3}\."
     $classCIpAddr = ($ipInfo | sls -Pattern $classCPattern).Matches.Value
-    $scanrange = (200..255)
+    $scanrange = (0..255)
     foreach ($ipaddr in $scanrange){
         $scanIp = $classCIpAddr + $ipaddr
         $pingStatus = fastping
