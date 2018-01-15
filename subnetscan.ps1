@@ -48,22 +48,26 @@ if ($activeIP.ipsubnet -eq "255.255.255.0"){
         $hn = Resolve-DnsName $scanIp
         $hn = $hn.namehost
         $tcpClient = New-Object System.Net.Sockets.TCPClient
-        $tcpClient.Connect("$scanIp",445) > $null
+        $tcpClient.Connect("$scanIp",135) > $null
         $SMBCheck = $tcpClient.Connected
         if ($SMBCheck -eq "True"){
             if(!$hn){
-              write-host "$scanIp      (Host is listening on SMB - could be a Windows system)"
+              write-host "$scanIp      (Host is listening on NETBIOS - could be a Windows system)"
             }
             else{
-              write-host "$scanIp    $hn (Host is listening on SMB - could be a Windows system)"
+              write-host "$scanIp    $hn (Host is listening on NETBIOS - could be a Windows system)"
             }             
         }
         else{
-          write-host "$scanIp    (Host is ignoring SMB - probably NOT a Windows system)"
+          write-host "$scanIp    (Host is ignoring NETBIOS - probably NOT a Windows system)"
         }
       }
       else{ }
   }
+}
+
+else{
+  write-output "Subnet is larger than /24.  Do you still want to continue scanning?"
 }
 
 write-output " "
